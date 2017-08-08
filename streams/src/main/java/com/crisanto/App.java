@@ -39,6 +39,49 @@ public class App
                 new LlamadaTelefonica(martin,LocalDate.of(2014,Month.JUNE,02), Duration.ofSeconds(180))
         );
 
+        /*Set<String> personas = new HashSet<>();
+
+        for (LlamadaTelefonica llamadaTelefonica: llamadaTelefonicasLog){
+            if(llamadaTelefonica.getFecha().getMonth() == Month.JUNE){
+                personas.add(llamadaTelefonica.getContacto().getNombre());
+            }
+        }
+
+        for(String persona : personas){
+            System.out.println(persona);
+        }
+
+        System.out.println("\n******************\n");
+
+        llamadaTelefonicasLog.stream()
+                .filter(llamadaTelefonica -> llamadaTelefonica.getFecha().getMonth() == Month.JUNE)
+                .map(llamadaTelefonica -> llamadaTelefonica.getContacto())
+                .map(contacto -> contacto.getNombre())
+                .distinct()
+                .forEach(System.out::println);
+*/
+
+        Optional<Duration> total = llamadaTelefonicasLog.stream()
+                .filter(llamadaTelefonica -> llamadaTelefonica.getFecha().getMonth() == Month.JUNE)
+                .map(llamadaTelefonica -> llamadaTelefonica.getDuration())
+                .reduce(Duration::plus);
+
+
+
+        llamadaTelefonicasLog.stream()
+                .filter(llamadaTelefonica -> llamadaTelefonica.getContacto().getCiudad() == "Juchitan")
+                .map(llamadaTelefonica -> llamadaTelefonica.getContacto().getNombre())
+                .distinct()
+                .forEach(nombre -> System.out.println(nombre));
+
+
+        boolean llame = llamadaTelefonicasLog.stream().anyMatch(llamadaTelefonica -> llamadaTelefonica.getContacto().getCiudad() == "Juchitan");
+
+        if(llame){
+            System.out.println("si hay llamadas a juchitan");
+        }
+
+
     }
 
 }
